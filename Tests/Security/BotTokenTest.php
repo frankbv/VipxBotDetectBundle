@@ -14,7 +14,6 @@ namespace Vipx\BotDetectBundle\Tests\Security;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Security\Core\Authentication\Token\AnonymousToken;
-use Symfony\Component\Security\Core\Role\Role;
 use Vipx\BotDetect\Metadata\MetadataInterface;
 use Vipx\BotDetectBundle\Security\BotToken;
 
@@ -29,13 +28,12 @@ class BotTokenTest extends TestCase
 
         $this->assertEquals($metadata, $token->getMetadata());
 
-        /** @var Role[] $roles */
-        $roles = $token->getRoles();
+        $roles = $token->getRoleNames();
 
         $contains = false;
 
         foreach ($roles as $role) {
-            if ('ROLE_BOT' === $role->getRole()) {
+            if ('ROLE_BOT' === $role) {
                 $contains = true;
             }
         }
@@ -54,7 +52,7 @@ class BotTokenTest extends TestCase
             ->getMock();
 
         $anonymousToken->method('getSecret')->willReturn('theSecretKey');
-        $anonymousToken->method('getRoles')->willReturn([]);
+        $anonymousToken->method('getRoleNames')->willReturn([]);
 
         $botToken = BotToken::fromAnonymousToken($metadata, $anonymousToken);
 

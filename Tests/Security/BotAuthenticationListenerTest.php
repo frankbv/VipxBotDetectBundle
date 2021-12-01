@@ -13,13 +13,14 @@ namespace Vipx\BotDetectBundle\Tests\Security;
 
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Security\Core\Authentication\Token\AnonymousToken;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Vipx\BotDetect\BotDetectorInterface;
 use Vipx\BotDetect\Metadata\MetadataInterface;
 use Vipx\BotDetectBundle\Security\BotAuthenticationListener;
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Vipx\BotDetectBundle\Security\BotToken;
@@ -61,7 +62,12 @@ class BotAuthenticationListenerTest extends TestCase
 
         /** @var HttpKernelInterface $kernel */
         $kernel = $this->getMockBuilder(HttpKernelInterface::class)->getMock();
-        $event = new GetResponseEvent($kernel, new Request(), HttpKernelInterface::MASTER_REQUEST);
+        $event = new ResponseEvent(
+            $kernel,
+            new Request(),
+            HttpKernelInterface::MASTER_REQUEST,
+            new Response()
+        );
 
         $listener->onKernelRequest($event);
     }
