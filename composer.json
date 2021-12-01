@@ -13,13 +13,13 @@
     ],
     "require": {
         "php": "^5.6|^7.0",
-        "symfony/framework-bundle": "^2.8|^3.0|^4.0",
-        "symfony/security-bundle": "^2.8|^3.0|^4.0",
+        "symfony/framework-bundle": "^2.8|^3.0|^4.0||^5.0",
+        "symfony/security-bundle": "^2.8|^3.0|^4.0||^5.0",
         "vipx/bot-detect": "~2.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^5.7|^6.5",
-        "php-coveralls/php-coveralls": "^2.1"
+        "php-coveralls/php-coveralls": "^v2.5.1"
     },
     "autoload": {
         "psr-4": { "Vipx\\BotDetectBundle\\": "./" }
@@ -28,5 +28,12 @@
         "branch-alias": {
             "dev-master": "4.0.x-dev"
         }
-    }
+    },
+    "repositories": [
+        {
+            "name": "vipx/bot-detect",
+            "type": "vcs",
+            "url": "https://github.com/frankbv/vipx-bot-detect"
+        }
+    ]
 }
